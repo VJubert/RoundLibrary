@@ -4,15 +4,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-<!--<RoundLibrary.RoundedFrameLayout
+    <RoundLibrary.RoundedFrameLayout
         android:layout_width="300dp"
         android:layout_height="50dp"
-      app:rounded_radius="8dp">
-        -->
-<!--<View
+        app:rounded_radius="8dp">
+        <View
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/holo_red_dark" />-->
-<!--
-    </RoundLibrary.RoundedFrameLayout>-->
+            android:background="@android:color/holo_red_dark" />
+    </RoundLibrary.RoundedFrameLayout>
+    <RoundLibrary.RoundedLinearLayout
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        app:rounded_radius="8dp">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/holo_blue_dark" />
+    </RoundLibrary.RoundedLinearLayout>
+    <RoundLibrary.RoundedRelativeLayout
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        app:rounded_radius="8dp">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/holo_green_dark" />
+    </RoundLibrary.RoundedRelativeLayout>
 </LinearLayout>
