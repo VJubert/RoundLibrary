@@ -50,9 +50,7 @@
     <Compile Include="RoundedFrameLayout.cs" />
     <Compile Include="RoundedLinearLayout.cs" />
     <Compile Include="RoundedRelativeLayout.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Xamarin.Android.Support.v7.AppCompat" Version="27.0.2" />
+    <Compile Include="CommonHelper.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

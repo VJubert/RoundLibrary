@@ -7,74 +7,65 @@ using Android.Widget;
 
 namespace RoundLibrary
 {
-    public class RoundedFrameLayout : FrameLayout
-    {
-        private float _radius;
-        private Path _path = new Path();
+	public class RoundedFrameLayout : FrameLayout
+	{
+		private float _radius;
+		private Path _path = new Path();
 
-        public RoundedFrameLayout(Context context) : base(context) { }
+		public RoundedFrameLayout(Context context) : base(context) { }
 
-        public RoundedFrameLayout(Context context, IAttributeSet attrs) : base(context, attrs)
-        {
-            Init(context, attrs);
-        }
+		public RoundedFrameLayout(Context context, IAttributeSet attrs) : base(context, attrs)
+		{
+			Init(context, attrs);
+		}
 
-        public RoundedFrameLayout(Context context, IAttributeSet attrs, int defStyleAttr) : base(context, attrs, defStyleAttr)
-        {
-            Init(context, attrs);
-        }
+		public RoundedFrameLayout(Context context, IAttributeSet attrs, int defStyleAttr) : base(context, attrs, defStyleAttr)
+		{
+			Init(context, attrs);
+		}
 
-        public RoundedFrameLayout(Context context, IAttributeSet attrs, int defStyleAttr, int defStyleRes) : base(context, attrs, defStyleAttr, defStyleRes)
-        {
-            Init(context, attrs);
-        }
+		public RoundedFrameLayout(Context context, IAttributeSet attrs, int defStyleAttr, int defStyleRes) : base(context, attrs, defStyleAttr, defStyleRes)
+		{
+			Init(context, attrs);
+		}
 
-        protected RoundedFrameLayout(IntPtr javaReference, JniHandleOwnership transfer) : base(javaReference, transfer) { }
+		protected RoundedFrameLayout(IntPtr javaReference, JniHandleOwnership transfer) : base(javaReference, transfer) { }
 
-        private void Init(Context context, IAttributeSet attrs)
-        {
-            var attributes = context.ObtainStyledAttributes(attrs, Resource.Styleable.RoundedLayout);
+		private void Init(Context context, IAttributeSet attrs)
+		{
+			CommonHelper.CheckVersion();
+			_radius = context.GetRadiusFromResource(attrs);
+		}
 
-            try
-            {
-                _radius = attributes.GetDimensionPixelSize(Resource.Styleable.RoundedLayout_rounded_radius, 0);
-            }
-            finally
-            {
-                attributes.Recycle();
-                attributes.Dispose();
-            }
-        }
+		protected override void OnSizeChanged(int w, int h, int oldw, int oldh)
+		{
+			base.OnSizeChanged(w, h, oldw, oldh);
+			_path.Reset();
+			using (var rect = new RectF())
+			{
+				rect.Set(0, 0, w, h);
+				_path.AddRoundRect(rect, _radius, _radius, Path.Direction.Cw);
+			}
 
-        protected override void OnSizeChanged(int w, int h, int oldw, int oldh)
-        {
-            base.OnSizeChanged(w, h, oldw, oldh);
-            _path.Reset();
-            using (var rect = new RectF())
-            {
-                rect.Set(0, 0, w, h);
-                _path.AddRoundRect(rect, _radius, _radius, Path.Direction.Cw);
-            }
+			_path.Close();
+		}
 
-            _path.Close();
-        }
+		protected override void DispatchDraw(Canvas canvas)
+		{
+			int save = canvas.Save();
+			canvas.ClipPath(_path);
+			base.DispatchDraw(canvas);
+			canvas.RestoreToCount(save);
+		}
 
-        protected override void DispatchDraw(Canvas canvas)
-        {
-            int save = canvas.Save();
-            canvas.ClipPath(_path);
-            base.DispatchDraw(canvas);
-            canvas.RestoreToCount(save);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                _path?.Dispose();
-                _path = null;
-            }
-            base.Dispose(disposing);
-        }
-    }
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				_path?.Dispose();
+				_path = null;
+			}
+			base.Dispose(disposing);
+		}
+	}
 }
