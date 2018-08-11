@@ -1,24 +1,20 @@
 ﻿using System;
-using Android.Content;
-using Android.Util;
-using Android.Locations;
+using Android.Graphics;
+
 namespace RoundLibrary
 {
 	internal static class CommonHelper
 	{
-		internal static float GetRadiusFromResource(this Context context, IAttributeSet attrs)
+		internal static void AddRoundedRect(this Path path, int width, int height, float radius)
 		{
-			var attributes = context.ObtainStyledAttributes(attrs, Resource.Styleable.RoundedLayout);
+			path.Reset();
+			using (var rect = new RectF())
+			{
+				rect.Set(0, 0, width, height);
+				path.AddRoundRect(rect, radius, radius, Path.Direction.Cw);
+			}
 
-			try
-			{
-				return attributes.GetDimensionPixelSize(Resource.Styleable.RoundedLayout_rounded_radius, 0);
-			}
-			finally
-			{
-				attributes.Recycle();
-				attributes.Dispose();
-			}
+			path.Close();
 		}
 
 		internal static void CheckVersion()

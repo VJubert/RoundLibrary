@@ -34,20 +34,23 @@ namespace RoundLibrary
 		private void Init(Context context, IAttributeSet attrs)
 		{
 			CommonHelper.CheckVersion();
-			_radius = context.GetRadiusFromResource(attrs);
+			var attributes = context.ObtainStyledAttributes(attrs, Resource.Styleable.RoundedRelativeLayout);
+
+			try
+			{
+				_radius = attributes.GetDimensionPixelSize(Resource.Styleable.RoundedRelativeLayout_corners_radius, 0);
+			}
+			finally
+			{
+				attributes.Recycle();
+				attributes.Dispose();
+			}
 		}
 
 		protected override void OnSizeChanged(int w, int h, int oldw, int oldh)
 		{
 			base.OnSizeChanged(w, h, oldw, oldh);
-			_path.Reset();
-			using (var rect = new RectF())
-			{
-				rect.Set(0, 0, w, h);
-				_path.AddRoundRect(rect, _radius, _radius, Path.Direction.Cw);
-			}
-
-			_path.Close();
+			_path.AddRoundedRect(w, h, _radius);
 		}
 
 		protected override void DispatchDraw(Canvas canvas)

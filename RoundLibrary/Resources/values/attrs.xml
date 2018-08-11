@@ -1,6 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <resources>
-  <declare-styleable name="RoundedLayout">
-    <attr name="rounded_radius" format="dimension"/>
+  <declare-styleable name="RoundedLinearLayout">
+    <attr name="corners_radius" format="dimension"/>
+  </declare-styleable>
+  <declare-styleable name="RoundedFrameLayout">
+    <attr name="corners_radius" format="dimension"/>
+  </declare-styleable>
+  <declare-styleable name="RoundedRelativeLayout">
+    <attr name="corners_radius" format="dimension"/>
   </declare-styleable>
 </resources>
