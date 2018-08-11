@@ -4,9 +4,9 @@ Simple library for override of commons Android ViewGroup to include a corners ra
 
 Supported ViewGroup : 
 
-  - FrameLayout
-  - LinearLayout
-  - RelativeLayout
+- FrameLayout
+- LinearLayout
+- RelativeLayout
 
 Supported Android Version : API 19+
 
